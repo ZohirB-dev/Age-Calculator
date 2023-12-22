@@ -1,13 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Inputs 
     const submitButton = document.getElementById("button");
     const dayInput = document.querySelector(".day-block .days");
     const monthInput = document.querySelector(".month-block .months");
     const yearInput = document.querySelector(".year-block .years");
 
+    // Outputs
+    const dayOutput = document.querySelector(".output .days span");
+    const monthOutput = document.querySelector(".output .months span");
+    const yearOutput = document.querySelector(".output .years span");
+
+
+
 
     submitButton.addEventListener("click", (e)=>{
         e.preventDefault(); // Prevent the default form submission
         validate(dayInput, monthInput, yearInput);
+
     });
 
     function validate(day, month, year){
@@ -66,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if(dayCheck && monthCheck && yearCheck){
-                calculateAge();
+                calculateAge(day, month, year);
             }
         }
 
@@ -97,6 +107,36 @@ document.addEventListener('DOMContentLoaded', function() {
         label.style.color = "";
     }
 
+    function calculateAge(day, month, year){
+        let today = new Date();
+        let birthDay = new Date(year.value, month.value - 1, day.value); 
+
+        console.log(day.value, month.value, year.value);
+
+        let ageYears = today.getFullYear() - birthDay.getFullYear();
+        let ageMonths = today.getMonth() - birthDay.getMonth();
+        let ageDays = today.getDate() - birthDay.getDate();
+
+        if (ageMonths < 0 || (ageMonths === 0 && ageDays < 0)) {
+            ageYears--;
+            ageMonths += 12;
+        }
+
+        if (ageDays < 0) {
+                ageDays += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            }
+
+
+        dayOutput.innerHTML = ageDays;
+        monthOutput.innerHTML = ageMonths;
+        yearOutput.innerHTML = ageYears;
+
+        console.log(`The days are ${ageDays}, the months are ${ageMonths} and the years are ${ageYears}`);
+
+
+    }
+
+    
    
 });
 
