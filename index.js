@@ -4,10 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const monthInput = document.querySelector(".month-block .months");
     const yearInput = document.querySelector(".year-block .years");
 
-    // function userInput(event) {
-    //     event.preventDefault(); // Prevent the default form submission
-    //     validate(dayInput, monthInput, yearInput);
-    // }
 
     submitButton.addEventListener("click", (e)=>{
         e.preventDefault(); // Prevent the default form submission
@@ -19,24 +15,68 @@ document.addEventListener('DOMContentLoaded', function() {
         const inputs = [year, month, day]
         const isDateInMonth = new Date(year.value, month.value, 0).getDate();
         const isYearInFuture = new Date().getFullYear();
+
+        let initialCheck = false;
+
         
         inputs.forEach(input => {
-            
+            const allInputsFilled = inputs.every(input => input.value);
+
             if(!input.value){
                 handleValidationError(input, "Please fill in this field");
-            } else if(month.value > 12){
-                handleValidationError(month, "Must be a valid month");
-            } else if(day.value < 1 || day.value > isDateInMonth){
-                handleValidationError(day, "Must be a valid day");
-            } else if(year.value > isYearInFuture){
-                handleValidationError(year,"Must be in the past day");
             } else {
-                input.parentElement.querySelector(".error-message").textContent = "";
-                input.style.border = "";
-                input.parentElement.querySelector("label").style.color = "";
+                resetValidation(input)
             } 
+            
+            if (allInputsFilled) {
+                initialCheck = true; // Set initialCheck to true if all inputs have values
+            } else {
+                initialCheck = false; // Keep initialCheck as false if some inputs are empty
+            }
         });
+        
+        
+        if (initialCheck) {
+            let dayCheck = false;
+            let monthCheck = false;
+            let yearCheck = false;
+
+            if (day.value < 1 || day.value > isDateInMonth) {
+                handleValidationError(day, "Must be a valid day");
+                dayCheck = false;
+            } else {
+                resetValidation(day);
+                dayCheck = true;
+            }
+
+            if (month.value > 12) {
+                handleValidationError(month, "Must be a valid month");
+                monthCheck = false;
+            } else {
+                resetValidation(month);
+                monthCheck = true;
+            }
+
+            if (year.value > isYearInFuture) {
+                handleValidationError(year, "Must be in the past day");
+                yearCheck = false;
+            } else {
+                resetValidation(year);
+                yearCheck = true;
+            }
+
+            if(dayCheck && monthCheck && yearCheck){
+                calculateAge();
+            }
+        }
+
+    
+
+
     };
+
+    // For every input, check whether it has one, if not run error function
+    // Making the checks run seperate of one another while
     
     function handleValidationError(result, message) {
         const error = result.parentElement.querySelector('.error-message');
@@ -47,11 +87,17 @@ document.addEventListener('DOMContentLoaded', function() {
         label.style.color = "var(--Light-red)";
     }
 
-    // function resetValidation(result, error, label) {
-    //     result.style.border = "";
-    //     error.textContent = "";
-    //     label.style.color = "";
-    // }
+    function resetValidation(result) {
+
+        const error = result.parentElement.querySelector('.error-message');
+        const label = result.parentElement.querySelector("label");
+
+        result.style.border = "";
+        error.textContent = "";
+        label.style.color = "";
+    }
+
+   
 });
 
 
