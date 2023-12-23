@@ -35,11 +35,11 @@
         const allInputsFilled = inputs.every(input => input.value);
 
         if (!input.value) {
-            handleValidationError(input, "This field is required");
+            errorResponse(input, "This field is required");
           } else if (input.value < 1){
-                handleValidationError(input, "Enter a valid figure")
+                errorResponse(input, "Enter a valid figure")
             } else{
-                  resetValidation(input);
+                  reset(input);
               }
         
   
@@ -57,26 +57,26 @@
         let yearCheck = false;
   
         if (day.value < 1 || day.value > isDateInMonth) {
-          handleValidationError(day, "Must be a valid day");
+          errorResponse(day, "Must be a valid day");
           dayCheck = false;
         } else {
-          resetValidation(day);
+          reset(day);
           dayCheck = true;
         }
   
         if (month.value > 12) {
-          handleValidationError(month, "Must be a valid month");
+          errorResponse(month, "Must be a valid month");
           monthCheck = false;
         } else {
-          resetValidation(month);
+          reset(month);
           monthCheck = true;
         }
   
         if (year.value > isYearInFuture) {
-          handleValidationError(year, "Must be in the past day");
+          errorResponse(year, "Must be in the past day");
           yearCheck = false;
         } else {
-          resetValidation(year);
+          reset(year);
           yearCheck = true;
         }
 
@@ -90,7 +90,7 @@
   
 
    // Error response
-    function handleValidationError(result, message) {
+    function errorResponse(result, message) {
       const error = result.parentElement.querySelector('.error-message');
       const label = result.parentElement.querySelector("label");
   
@@ -99,7 +99,7 @@
       label.style.color = "var(--Light-red)";
     }
     // Valid input response
-    function resetValidation(result) {
+    function reset(result) {
   
       const error = result.parentElement.querySelector('.error-message');
       const label = result.parentElement.querySelector("label");
