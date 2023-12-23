@@ -34,14 +34,11 @@ Users should be able to:
 - See hover and focus states for all interactive elements on the page
 - **Bonus**: See the age numbers animate to their final number when the form is submitted
 
-### Screenshot
-
-![](./screenshot.jpg)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [(https://zohirb-dev.github.io/Age-Calculator/)]
+- Solution URL: [(https://github.com/ZohirB-dev/Age-Calculator.git)]
 
 ## My process
 
