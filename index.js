@@ -148,7 +148,6 @@
       animateValue(dayOutput, 0, ageDays, 1000);
       animateValue(monthOutput, 0, ageMonths, 1000);
       animateValue(yearOutput, 0, ageYears, 1000);
-       console.log(ageMonths);
     }
   
   
